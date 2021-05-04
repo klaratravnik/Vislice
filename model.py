@@ -6,6 +6,7 @@ PRAVILNA_CRKA = '+'
 PONOVLJENA_CRKA = '0'
 NAPACNA_CRKA = '-'
 
+ZACETEK = 'Z'
 ZMAGA = 'W'
 PORAZ = 'X'
 
@@ -71,4 +72,26 @@ def nova_igra(bazen_besed):
     beseda = random.choice(bazen_besed).strip()
 
     return Igra(beseda, '')
+
+
+class Vislice:
+    def __init__(self):
+        self.igre = {}
+    
+    def prost_id_igre(self):
+        if len(self.igre) == 0:
+            return 0
+        else:
+            return max(self.igre.keys()) + 1
+        
+    def nova_igra(self):
+        id_igre = self.prost_id_igre()
+        igra = nova_igra()
+        self.igre[id_igre] = (igra, ZACETEK)
+        return id_igre
+
+    def ugibaj(self, id_igre, crka):
+        igra, _ = self.igre[id_igre]
+        stanje = igra.ugibaj(crka)
+        self.igre[id_igre] = (igra, stanje)
 
